@@ -5,12 +5,13 @@ App.Views.Whine = Backbone.View.extend({
   },
 
   upvote: function() {
-    console.log("tesT");
+    this.model.upvote();
   },
 
   initialize: function(options) {
     this.model = options.model;
     this.template = $('#whine').html();
+    this.listenTo(this.model, 'change', this.render);
   },
 
   render: function() {

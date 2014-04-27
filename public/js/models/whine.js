@@ -3,6 +3,9 @@ App.Models.Whine = Backbone.Model.extend({
     score: 0
   },
   upvote: function() {
-    
+    var score = parseInt(this.get('score'));
+    $.getJSON('/whines/'+this.get('_id')+'/upvote', function(data){
+      this.set('score', score+1);
+    }.bind(this));
   }
 });
