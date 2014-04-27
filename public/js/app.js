@@ -9,18 +9,56 @@ var sample_whines = [{
   tweet: 'whine, whine, I dont whine too much!'
 }];
 
-var WhineView = Backbone.View.extend({
-  template: "<li><%= username %> -- <%= tweet %></li>",
+App = {
+  Collections: {},
+  Models: {},
+  Views: {}
+}
+
+App.Models.Whine = Backbone.Model.extend({});
+
+App.Collections.Whines = Backbone.Collection.extend({
+  model: App.Models.Whine,
+  url: '/whines'
+});
+
+App.Views.Whine = Backbone.View.extend({
+  tagName: "li",
+
+  template: "<%= username %> -- <%= tweet %>",
+
+  initialize: function(options) {
+    this.model = options.model;
+  },
+
   render: function() {
-    this.$el.html(this.template({
-      whines: sample_whines
-    }))
+    this.$el.html(_.template(this.template, this.model.attributes));
+    return this;
   }
 });
 
-var view = new WhinesView();
+App.Views.Whines = Backbone.View.extend({
+  tagName: "ul",
 
-view.setElement('#whines');
+  initialize: function() {
+    this.collection = new App.Collections.Whines();
+    this.listenTo(this.collection, 'reset', this.render);
+    this.collection.fetch({reset:true});
+  },
 
-view.render();
+  render: function() {
+    this.$el.html("");
+    this.collection.each(function(whine){
+      var whineView = new App.Views.Whine({ model: whine });
+      this.$el.append(whineView.render().$el);
+    }.bind(this));
+    return this;
+  }
+});
 
+$(function() {
+  var app = {};
+  app.whinesView = new App.Views.Whines();
+  $('#container').html(app.whinesView.render().$el);
+  window.app = app
+});
