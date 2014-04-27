@@ -15,7 +15,11 @@ App = {
   Views: {}
 }
 
-App.Models.Whine = Backbone.Model.extend({});
+App.Models.Whine = Backbone.Model.extend({
+  upvote: function() {
+    
+  }
+});
 
 App.Collections.Whines = Backbone.Collection.extend({
   model: App.Models.Whine,
@@ -60,5 +64,5 @@ $(function() {
   var app = {};
   app.whinesView = new App.Views.Whines();
   $('#container').html(app.whinesView.render().$el);
-  window.app = app
+  window.app = app;
 });
