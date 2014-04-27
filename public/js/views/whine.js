@@ -1,9 +1,16 @@
 App.Views.Whine = Backbone.View.extend({
   tagName: "li",
+  events: {
+    'click button.upvote': 'upvote'
+  },
+
+  upvote: function() {
+    console.log("tesT");
+  },
 
   initialize: function(options) {
     this.model = options.model;
-    this.template = document.querySelector('#whine').content.textContent;
+    this.template = $('#whine').html();
   },
 
   render: function() {
