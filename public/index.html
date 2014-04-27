@@ -4,13 +4,23 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
   <title>WhineCombinator</title>
-  <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/vendor/jquery-1.11.0.min.js"></script>
   <script src="js/vendor/underscore-min.js"></script>
   <script src="js/vendor/backbone-min.js"></script>
+  <script src="js/namespace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/models/whine.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/collections/whines.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/views/whine.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/views/whines.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="css/app.css" type="text/css" />
   
 </head>
 <body>
-  <div id="whines"></div>
+<div id="container"></div>
+
+<template id="whine">
+  <%= username %> -- <%= tweet %>
+</template>
 </body>
 </html>
