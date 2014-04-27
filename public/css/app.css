@@ -447,3 +447,12 @@ li {
 div{
   padding: 6px 0;
 }
+
+#header {
+  margin:  0 auto;
+  background-color: rgb(255, 102, 0);
+}
+
+#header h1 {
+  padding-left: 20px;
+}
