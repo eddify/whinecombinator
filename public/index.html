@@ -19,7 +19,10 @@
 <div id="container"></div>
 
 <template id="whine">
-  <%= username %> -- <%= tweet %>
+  <span class="username"><%= username %></span>
+  <span class="tweet"><%= tweet %></span>
+  <button class="upvote">upvote</button>
+  <span class="score"><%= score %></span>
 </template>
 </body>
 </html>
