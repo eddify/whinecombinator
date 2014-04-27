@@ -1,10 +1,9 @@
 App.Views.Whine = Backbone.View.extend({
   tagName: "li",
 
-  template: "<%= username %> -- <%= tweet %>",
-
   initialize: function(options) {
     this.model = options.model;
+    this.template = document.querySelector('#whine').content.textContent;
   },
 
   render: function() {
