@@ -7,12 +7,18 @@ var twitter = new twitterAPI({
     callback: 'http://yoururl.tld/something'
 });
 
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
+
 var util = require('util');
 
 function getTweets(callback) {
 
 	twitter.search( {
-	        q: "#myboyfriendleftme OR #ihatewhen OR #askmeificare OR #shitty OR #sucks OR #notcool OR #wanttocry OR #mylifesucks OR #idonecare OR #myfriendisabastard OR #mygirlfriendisabitch"
+	        q: "#myboyfriendleftme OR #ihatewhen OR #askmeificare OR #shitty OR #sucks OR #notcool OR #wanttocry OR #mylifesucks OR #idonecare OR #myfriendisabastard OR #mygirlfriendisabitch",
+	        count: 100,
+	        result_type: 'mixed'
 	    },
 	    '918354384-tYmdVh1EXzXjVerRJMizn01Bg19XozBbHbiOi69q',
 	    'IY9jOT1GIrCeChJbfv8htt0aoM4N5DCcljjlRIR76g',
@@ -23,12 +29,17 @@ function getTweets(callback) {
 	        } else {
 	        	var arr = [];
 	        	var tweets = data.statuses;
+	        	console.log(data)
 	         	for(var i in tweets) {
 	         		var text = tweets[i].text;
 	         		var user = tweets[i].user.screen_name;
+	         		var id = tweets[i].id;
 	         		arr.push({
 	         			username: user,
-	         			tweet: text
+	         			tweet: text,
+	         			_id: id,
+	         			id: id,
+	         			score: 0
 	         		})
 	         	}
 
@@ -46,12 +57,57 @@ app.use(express.static(__dirname + '/public'));
 app.listen(port);
 console.log("Listening on port "+port);
 
-setInterval(function() {
-	getTweets(function(tweets) {
-		tweetList = tweets;
+var Tweet = mongoose.model('Tweet', { username: String, tweet: String, score: Number, _id: Number, id: Number });
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+	console.log('mongo connected');
+	//setInterval(function() {
+
+		getTweets(function(tweets) {
+			for(var i in tweets) {
+				var tweet = new Tweet(tweets[i]);
+				tweet.save(tweet, function(err) {
+					if(err){
+						console.error('error saving tweet: ' + util.inspect(err));
+						return;
+					}
+				});
+			}
+		})
+	//},10000)
+});
+
+app.get('/whines/:id/upvote', function(req,res) {
+	Tweet.findById(req.params.id, function(err, tweet) {
+		if(err)
+		{
+			console.error('error getting upvote: ' + req.params.id)
+			res.status(404).send('resource not found')
+			return;
+
+		}
+		tweet.score += 1;
+		tweet.save(function(err, data) {
+			if(err)
+			{
+				console.error('error saving upvote: ' + req.params.id)
+				res.status(500).send('error saving')
+			}
+			console.log('successfully saved upvote')
+			res.json({success: true})
+		})
+
+
 	})
-}, 5000)
+})
 
 app.get('/whines', function(req, res) {
-	res.json(tweetList)
+	Tweet
+		.find()
+		.sort('-score')
+		.exec(function(err, data) {
+			res.json(data)
+		})
 })
