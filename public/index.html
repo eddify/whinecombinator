@@ -14,7 +14,7 @@
   <script src="js/views/whines.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
   <link rel="stylesheet" href="css/app.css" type="text/css" />
-  
+  <link rel='stylesheet' href='http://code.ionicframework.com/ionicons/1.4.1/css/ionicons.min.css' type="text/css" />  
 </head>
 <body>
 <div id="header"><h1>Whine Combinator ...whaaa!</h1></div>
@@ -24,7 +24,8 @@
   <div class="tweet"><%= tweet %></div>
   <div class="username"><%= username %></div>
   <div>
-    <button class="upvote">upvote (<%= score %>)</button>
+    <button class="upvote">upvote <span class="icon ion-arrow-up-a"></span></button>
+    <span class="score"><%= score %></span>
   </div>
 </script>
 </body>

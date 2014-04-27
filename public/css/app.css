@@ -463,12 +463,23 @@ div {
   padding: 4px 12px;
   border-radius: 4px;
   text-shadow: 1px 1px 0px #fff;
-  color: #369;
+  color: #545454;
   font-size: 18px;
 }
-
+.upvote .icon {
+  color: #89B4FA;
+  font-size: 16px;
+}
+.score:before {
+  content: " (";
+}
+.score:after {
+  content: ")";
+}
 .score {
   margin-left: 6px;
+  font-size: 18px;
+  color: #545454;
 }
 
 .username {
