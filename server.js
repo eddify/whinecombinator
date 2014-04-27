@@ -46,11 +46,10 @@ app.use(express.static(__dirname + '/public'));
 app.listen(port);
 console.log("Listening on port "+port);
 
-setInterval(function() {
-	getTweets(function(tweets) {
-		tweetList = tweets;
-	})
-}, 5000)
+getTweets(function(tweets) {
+  tweetList = tweets;
+  console.log("Got tweets!");
+});
 
 app.get('/whines', function(req, res) {
 	res.json(tweetList)
