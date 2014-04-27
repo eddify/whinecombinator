@@ -9,14 +9,18 @@ var sample_whines = [{
   tweet: 'whine, whine, I dont whine too much!'
 }];
 
-var WhinesCollection = Backbone.Collection.extend({
-  
-});
-
-var WhinesView = Backbone.Collection.extend({
-  
+var WhineView = Backbone.View.extend({
+  template: "<li><%= username %> -- <%= tweet %></li>",
+  render: function() {
+    this.$el.html(this.template({
+      whines: sample_whines
+    }))
+  }
 });
 
 var view = new WhinesView();
 
 view.setElement('#whines');
+
+view.render();
+
