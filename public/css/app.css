@@ -425,7 +425,7 @@ th {
 }
 
 body {
-  background-color: #fcfcfc;
+  background-color: #f8f8f8;
 }
 
 #container {
@@ -444,7 +444,7 @@ li {
   font-size: 20px;
 }
 
-div{
+div {
   padding: 6px 0;
 }
 
@@ -455,4 +455,25 @@ div{
 
 #header h1 {
   padding-left: 20px;
+}
+
+.upvote {
+  background-color: #f0f0f0;
+  border: 1px solid #e2e2e2;
+  padding: 4px 12px;
+  border-radius: 4px;
+  text-shadow: 1px 1px 0px #fff;
+  color: #369;
+  font-size: 18px;
+}
+
+.score {
+  margin-left: 6px;
+}
+
+.username {
+  color: rgb(97, 102, 116);
+}
+.username:before {
+  content: "- ";
 }
