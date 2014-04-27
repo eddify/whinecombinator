@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+var twitapi = require('node-twitter-api');
+
+
 var port = process.env.PORT || 1337;
 var express = require('express');
 var app = express();
